@@ -20,12 +20,13 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
 }
 
-// API名称（複数指定可能、パッケージ名に使われるので小文字で）
-// val apiList = listOf("sp")
+// API名称（パッケージ名に使われるので小文字で）
 val apiName = "sp"
 
 // 自動生成先のパッケージ名
-val basePackage = "cc.cointrade.app.api"
+val basePackage = "com.example.openapigenerationtest.api"
+
+fun String.packageToDir() = replace('.', '/')
 
 task<org.openapitools.generator.gradle.plugin.tasks.GenerateTask>("generate") {
     doFirst {
@@ -51,4 +52,25 @@ task<org.openapitools.generator.gradle.plugin.tasks.GenerateTask>("generate") {
         )
     )
     generateApiTests.set(false)
+}
+
+task<Copy>("copy") {
+    doFirst {
+        delete(file("$projectDir/src/main/java/${basePackage.packageToDir()}/$apiName/"))
+    }
+
+    val dirFrom = "$buildDir/openApiGeneratorForModel/$apiName/src/main/kotlin/${basePackage.packageToDir()}/$apiName/"
+    val dirInto = "$projectDir/src/main/java/${basePackage.packageToDir()}/$apiName/"
+
+    dependsOn("generate")
+    from(dirFrom)
+    into(dirInto)
+
+    doLast {
+        println("copied $dirFrom -> $dirInto")
+    }
+}
+
+task("buildApi") {
+    dependsOn("generate", "copy")
 }

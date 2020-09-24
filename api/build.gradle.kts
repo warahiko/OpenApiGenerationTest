@@ -55,12 +55,12 @@ task<org.openapitools.generator.gradle.plugin.tasks.GenerateTask>("generate") {
 }
 
 task<Copy>("copy") {
-    doFirst {
-        delete(file("$projectDir/src/main/java/${basePackage.packageToDir()}/$apiName/"))
-    }
-
     val dirFrom = "$buildDir/openApiGeneratorForModel/$apiName/src/main/kotlin/${basePackage.packageToDir()}/$apiName/"
     val dirInto = "$projectDir/src/main/java/${basePackage.packageToDir()}/$apiName/"
+
+    doFirst {
+        delete(file(dirInto))
+    }
 
     dependsOn("generate")
     from(dirFrom)

@@ -37,7 +37,7 @@ task<org.openapitools.generator.gradle.plugin.tasks.GenerateTask>("generate") {
 
     generatorName.set("kotlin")
     library.set("jvm-retrofit2")
-    inputSpec.set("$rootDir/swagger.yaml")
+    inputSpec.set("$rootDir/openapi.yaml")
     outputDir.set("$buildDir/openApiGenerator/$apiName/")
     // outputDir.set("$rootDir/api/src/main/java")
     apiPackage.set("$basePackage.$apiName.api")

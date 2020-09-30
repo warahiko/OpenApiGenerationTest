@@ -1,0 +1,308 @@
+openapi: 3.0.3
+info:
+  description: Qiita API を用いたOpenAPI Generator のテストです。
+  version: 0.0.0
+  title: OpenAPI Generator test with Qiita API
+servers:
+  - url: https://qiita.com/api/v2/
+    description: Qiita API
+tags:
+- name: user
+  description: ユーザに関係する操作
+- name: item
+  description: 投稿に関係する操作
+paths:
+  /api/v2/users:
+    get:
+      tags:
+      - user
+      summary: 全てのユーザの一覧を作成日時の降順で取得します。
+      description: getAllUser の詳細です。
+      operationId: getAllUser
+      parameters:
+      - name: page
+        in: query
+        description: ページ番号 (1から100まで)
+        example: 1
+        required: false
+        schema:
+          type: string
+          pattern: /^[0-9]+$/
+      - name: per_page
+        in: query
+        description: 1ページあたりに含まれる要素数 (1から100まで)
+        example: 20
+        required: false
+        schema:
+          type: string
+          pattern: /^[0-9]+$/
+      responses:
+        200:
+          description: 取得成功です。
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        default:
+          description: Unexpected error
+  /api/v2/users/{user_id}:
+    get:
+      tags:
+      - user
+      summary: ユーザを取得します。 
+      description: getUser の詳細です。
+      operationId: getUser
+      parameters:
+      - name: user_id
+        in: path
+        description: ユーザID
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: 取得成功です。
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/v2/items:
+    get:
+      tags:
+      - item
+      summary: 記事の一覧を作成日時の降順で返します。
+      description: getAllItems の詳細です。
+      operationId: getAllItems
+      parameters:
+      - name: page
+        in: query
+        description: ページ番号 (1から100まで)
+        example: 1
+        required: false
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        description: 1ページあたりに含まれる要素数 (1から100まで)
+        example: 20
+        required: false
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: 検索クエリ
+        example: qiita user:Qiita
+        required: false
+        schema:
+          type: string
+      responses:
+        200:
+          description: 取得成功です。
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Item'
+components:
+  schemas:
+    User:
+      description: Qiita上のユーザを表します。
+      type: object
+      properties:
+        description:
+          description: 自己紹介文
+          type: string
+          nullable: true
+          example: Hello, world.
+        facebook_id:
+          description: Facebook ID
+          type: string
+          nullable: true
+          example: qiita
+        followees_count:
+          description: このユーザがフォローしているユーザの数
+          type: integer
+          example: 100
+        followers_count:
+          description: このユーザをフォローしているユーザの数
+          type: integer
+          example: 200
+        github_login_name:
+          description: GitHub ID
+          type: string
+          nullable: true
+          example: qiitan
+        id:
+          description: ユーザID
+          type: string
+          example: qiita
+        items_count:
+          description: このユーザが qiita.com 上で公開している記事の数 (Qiita Teamでの記事数は含まれません)
+          type: integer
+          example: 300
+        linkedin_id:
+          description: LinkedIn ID
+          type: string
+          nullable: true
+          example: qiita
+        location:
+          description: 居住地
+          type: string
+          nullable: true
+          example: Tokyo, Japan
+        name:
+          description: 設定している名前
+          type: string
+          nullable: true
+          example: Qiita キータ
+        organization:
+          description: 所属している組織
+          type: string
+          nullable: true
+          example: Increments Inc
+        permanent_id:
+          description: ユーザごとに割り当てられる整数のID
+          type: integer
+          example: 1
+        profile_image_url:
+          description: 設定しているプロフィール画像のURL
+          type: string
+          example: https://s3-ap-northeast-1.amazonaws.com/qiita-image-store/0/88/ccf90b557a406157dbb9d2d7e543dae384dbb561/large.png?1575443439
+        team_only:
+          description: Qiita Team専用モードに設定されているかどうか
+          type: boolean
+          example: false
+        twitter_screen_name:
+          description: Twitterのスクリーンネーム
+          type: string
+          nullable: true
+          example: qiita
+        website_url:
+          description: 設定しているWebサイトのURL
+          type: string
+          nullable: true
+          example: https://qiita.com
+    Item:
+      description: ユーザからの投稿を表します。
+      type: object
+      properties:
+        rendered_body:
+          description: HTML形式の本文
+          type: string
+          example: <h1>Example</h1>
+        body:
+          description: Markdown形式の本文
+          type: string
+          example: "# Example"
+        coediting:
+          description: この記事が共同更新状態かどうか (Qiita Teamでのみ有効)
+          type: boolean
+          example: false
+        comments_count:
+          description: この記事へのコメントの数
+          type: integer
+          example: 100
+        created_at:
+          description: データが作成された日時
+          type: string
+          format: date-time
+          example: 2000-01-01T00:00:00+00:00
+        group:
+          $ref: '#/components/schemas/Group'
+        id:
+          description: 記事の一意なID
+          type: string
+          pattern: /^[0-9a-f]{20}$/
+          example: c686397e4a0f4f11683d
+        likes_count:
+          description: この記事への「LGTM！」の数（Qiitaでのみ有効）
+          type: integer
+          example: 100
+        private:
+          description: 限定共有状態かどうかを表すフラグ (Qiita Teamでは無効)
+          type: boolean
+          example: false
+        reactions_count:
+          description: 絵文字リアクションの数（Qiita Teamでのみ有効）
+          type: integer
+          example: 100
+        tags:
+          description: 記事に付いたタグ一覧
+          type: array
+          items:
+            $ref: '#/components/schemas/Tag'
+          example: '[{"name"=>"Ruby", "versions"=>["0.0.1"]}]'
+        title:
+          description: 記事のタイトル
+          type: string
+          example: Example title
+        updated_at:
+          description: データが最後に更新された日時
+          type: string
+          format: date-time
+          example: 2000-01-01T00:00:00+00:00
+        url:
+          description: 記事のURL
+          type: string
+          example: https://qiita.com/Qiita/items/c686397e4a0f4f11683d
+        user:
+          $ref: '#/components/schemas/User'
+        page_views_count:
+          description: 閲覧数
+          type: integer
+          nullable: true
+          example: 100
+    Tag:
+      description: 記事に付けられた個々のタグを表します。
+      type: object
+      properties:
+        followers_count:
+          description: このタグをフォローしているユーザの数
+          type: integer
+          example: 100
+        icon_url:
+          description: このタグに設定されたアイコン画像のURL
+          type: string
+          nullable: true
+          example: https://s3-ap-northeast-1.amazonaws.com/qiita-tag-image/9de6a11d330f5694820082438f88ccf4a1b289b2/medium.jpg
+        id:
+          description: タグを特定するための一意な名前
+          type: string
+          example: qiita
+        items_count:
+          description: このタグが付けられた記事の数
+          type: integer
+          example: 200
+    Group:
+      description: Qiita Teamのグループを表します。
+      type: object
+      properties:
+        created_at:
+          description: データが作成された日時
+          type: string
+          format: date-time
+          example: 2000-01-01T00:00:00+00:00
+        id:
+          description: グループの一意なIDを表します。
+          type: integer
+          example: 1
+        name:
+          description: グループに付けられた表示用の名前を表します。
+          type: string
+          example: Dev
+        private:
+          description: 非公開グループかどうかを表します。
+          type: boolean
+          example: false
+        updated_at:
+          description: データが最後に更新された日時
+          type: string
+          format: date-time
+          example: 2000-01-01T00:00:00+00:00
+        url_name:
+          description: グループのチーム上での一意な名前を表します。
+          type: string
+          example: dev

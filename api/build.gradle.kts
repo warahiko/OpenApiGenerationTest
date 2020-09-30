@@ -18,6 +18,8 @@ dependencies {
 
     // retrofit
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
+    implementation("com.squareup.retrofit2","converter-moshi", retrofitVersion)
+    implementation("com.squareup.retrofit2","converter-scalars", retrofitVersion)
 }
 
 // API名称（パッケージ名に使われるので小文字で）
@@ -34,6 +36,7 @@ task<org.openapitools.generator.gradle.plugin.tasks.GenerateTask>("generate") {
     }
 
     generatorName.set("kotlin")
+    library.set("jvm-retrofit2")
     inputSpec.set("$rootDir/swagger.yaml")
     outputDir.set("$buildDir/openApiGeneratorForModel/$apiName/")
     // outputDir.set("$rootDir/api/src/main/java")

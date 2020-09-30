@@ -24,6 +24,14 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), file("proguard-rules.pro"))
         }
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 val kotlinVersion: String by rootProject.extra
@@ -38,6 +46,7 @@ dependencies {
     implementation("androidx.core", "core-ktx", "1.3.1")
     implementation("androidx.appcompat", "appcompat", "1.2.0")
     implementation("androidx.constraintlayout", "constraintlayout", "2.0.1")
+    implementation("androidx.activity", "activity-ktx", "1.1.0")
     testImplementation("junit", "junit", "4.12")
     androidTestImplementation("androidx.test.ext", "junit", "1.1.2")
     androidTestImplementation("androidx.test.espresso", "espresso-core", "3.3.0")

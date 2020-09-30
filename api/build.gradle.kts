@@ -1,3 +1,8 @@
+val kotlinVersion: String by rootProject.extra
+val kotlinxSerializationRuntime: String by rootProject.extra
+val retrofitVersion: String by rootProject.extra
+val moshiVersion: String by rootProject.extra
+
 plugins {
     kotlin("jvm")
 
@@ -6,21 +11,16 @@ plugins {
     id("kotlinx-serialization")
 }
 
-val kotlinVersion: String by rootProject.extra
-val kotlinxSerializationRuntime: String by rootProject.extra
-val retrofitVersion: String by rootProject.extra
-val moshiVersion: String by rootProject.extra
-
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
 
     implementation(kotlin("stdlib-jdk8"))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinxSerializationRuntime")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-runtime", kotlinxSerializationRuntime)
 
     // retrofit
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2","converter-moshi", retrofitVersion)
-    implementation("com.squareup.retrofit2","converter-scalars", retrofitVersion)
+    implementation("com.squareup.retrofit2", "retrofit", retrofitVersion)
+    implementation("com.squareup.retrofit2", "converter-moshi", retrofitVersion)
+    implementation("com.squareup.retrofit2", "converter-scalars", retrofitVersion)
 
     implementation("com.squareup.moshi", "moshi", moshiVersion)
     implementation("com.squareup.moshi", "moshi-adapters", moshiVersion)

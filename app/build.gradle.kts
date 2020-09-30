@@ -30,6 +30,7 @@ val kotlinVersion: String by rootProject.extra
 
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
+    implementation(project(":api"))
 
     implementation(kotlin("stdlib", version = kotlinVersion))
     implementation("androidx.core", "core-ktx", "1.3.1")

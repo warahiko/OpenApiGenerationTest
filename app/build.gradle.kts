@@ -27,6 +27,8 @@ android {
 }
 
 val kotlinVersion: String by rootProject.extra
+val retrofitVersion: String by rootProject.extra
+val okHttpVersion: String by rootProject.extra
 
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
@@ -39,4 +41,8 @@ dependencies {
     testImplementation("junit", "junit", "4.12")
     androidTestImplementation("androidx.test.ext", "junit", "1.1.2")
     androidTestImplementation("androidx.test.espresso", "espresso-core", "3.3.0")
+
+    // retrofit
+    implementation("com.squareup.retrofit2","retrofit", retrofitVersion)
+    implementation("com.squareup.okhttp3", "logging-interceptor", okHttpVersion)
 }

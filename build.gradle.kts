@@ -3,6 +3,8 @@ buildscript {
     val androidGradlePluginVersion: String by extra { "4.0.1" }
     val kotlinxSerializationRuntime: String by extra { "0.20.0" }
     val retrofitVersion: String by extra { "2.8.1" }
+    val okHttpVersion: String by extra { "4.9.0" }
+    val moshiVersion: String by extra { "1.10.0" }
 
     repositories {
         google()

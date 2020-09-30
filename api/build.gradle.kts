@@ -9,6 +9,7 @@ plugins {
 val kotlinVersion: String by rootProject.extra
 val kotlinxSerializationRuntime: String by rootProject.extra
 val retrofitVersion: String by rootProject.extra
+val moshiVersion: String by rootProject.extra
 
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
@@ -20,6 +21,10 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2","converter-moshi", retrofitVersion)
     implementation("com.squareup.retrofit2","converter-scalars", retrofitVersion)
+
+    implementation("com.squareup.moshi", "moshi", moshiVersion)
+    implementation("com.squareup.moshi", "moshi-adapters", moshiVersion)
+    implementation("com.squareup.moshi", "moshi-kotlin", moshiVersion)
 }
 
 // API名称（パッケージ名に使われるので小文字で）

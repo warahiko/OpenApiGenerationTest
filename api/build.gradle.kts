@@ -25,6 +25,9 @@ dependencies {
 // API名称（パッケージ名に使われるので小文字で）
 val apiName = "sp"
 
+// ビルド先ディレクトリ
+val buildApiDir = "$buildDir/openApiGenerator/$apiName"
+
 // 自動生成先のパッケージ名
 val basePackage = "com.example.openapigenerationtestapi"
 
@@ -32,24 +35,17 @@ fun String.packageToDir() = replace('.', '/')
 
 task<org.openapitools.generator.gradle.plugin.tasks.GenerateTask>("generate") {
     doFirst {
-        delete(file("$buildDir/openApiGenerator/$apiName"))
+        delete(file(buildApiDir))
     }
 
     generatorName.set("kotlin")
     library.set("jvm-retrofit2")
     templateDir.set("$rootDir/template")
     inputSpec.set("$rootDir/openapi.yaml")
-    outputDir.set("$buildDir/openApiGenerator/$apiName/")
-    // outputDir.set("$rootDir/api/src/main/java")
-    apiPackage.set("$basePackage.$apiName.api")
+    outputDir.set(buildApiDir)
     packageName.set(basePackage)
-    // invokerPackage.set("$basePackage.$apiName.invoker")
+    apiPackage.set("$basePackage.$apiName.api")
     modelPackage.set("$basePackage.$apiName.model")
-    // modelFilesConstrainedTo.set(
-    //     listOf(
-    //         "Error"
-    //     )
-    // )
     configOptions.set(mapOf(
         "dateLibrary" to "java8"
     ))
@@ -60,7 +56,7 @@ task<org.openapitools.generator.gradle.plugin.tasks.GenerateTask>("generate") {
 }
 
 task<Copy>("copy") {
-    val dirFrom = "$buildDir/openApiGenerator/$apiName/src/main/kotlin/${basePackage.packageToDir()}/"
+    val dirFrom = "$buildApiDir/src/main/kotlin/${basePackage.packageToDir()}/"
     val dirInto = "$projectDir/src/main/java/${basePackage.packageToDir()}/"
 
     doFirst {

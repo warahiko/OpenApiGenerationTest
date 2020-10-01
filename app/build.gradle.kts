@@ -49,4 +49,7 @@ dependencies {
 
     implementation(Dependency.retrofit)
     implementation(Dependency.okHttpLoggingInterceptor)
+
+    // TODO: いらないはず？
+    implementation(Dependency.moshi)
 }

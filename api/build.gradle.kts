@@ -15,6 +15,7 @@ dependencies {
     implementation(Dependency.retrofit)
     implementation(Dependency.retrofitConverterMoshi)
     implementation(Dependency.retrofitConverterScalars)
+    implementation(Dependency.okHttpLoggingInterceptor)
 
     implementation(Dependency.moshi)
     implementation(Dependency.moshiAdapters)
@@ -36,6 +37,7 @@ task<org.openapitools.generator.gradle.plugin.tasks.GenerateTask>("generate") {
 
     generatorName.set("kotlin")
     library.set("jvm-retrofit2")
+    templateDir.set("$rootDir/template")
     inputSpec.set("$rootDir/openapi.yaml")
     outputDir.set("$buildDir/openApiGenerator/$apiName/")
     // outputDir.set("$rootDir/api/src/main/java")
@@ -48,11 +50,12 @@ task<org.openapitools.generator.gradle.plugin.tasks.GenerateTask>("generate") {
     //         "Error"
     //     )
     // )
-    configOptions.set(
-        mapOf(
-            "dateLibrary" to "java8"
-        )
-    )
+    configOptions.set(mapOf(
+        "dateLibrary" to "java8"
+    ))
+    additionalProperties.set(mapOf(
+        "doNotUseRxAndCoroutines" to "true"
+    ))
     generateApiTests.set(false)
 }
 

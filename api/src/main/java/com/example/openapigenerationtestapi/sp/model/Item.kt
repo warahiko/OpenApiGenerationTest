@@ -16,6 +16,7 @@ import com.example.openapigenerationtestapi.sp.model.Tag
 import com.example.openapigenerationtestapi.sp.model.User
 
 import com.squareup.moshi.Json
+
 /**
  * ユーザからの投稿を表します。
  * @param renderedBody HTML形式の本文

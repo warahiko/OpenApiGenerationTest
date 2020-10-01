@@ -13,6 +13,7 @@ package com.example.openapigenerationtestapi.sp.model
 
 
 import com.squareup.moshi.Json
+
 /**
  * Qiita上のユーザを表します。
  * @param description 自己紹介文

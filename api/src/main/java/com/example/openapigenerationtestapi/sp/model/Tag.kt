@@ -13,6 +13,7 @@ package com.example.openapigenerationtestapi.sp.model
 
 
 import com.squareup.moshi.Json
+
 /**
  * 記事に付けられた個々のタグを表します。
  * @param followersCount このタグをフォローしているユーザの数

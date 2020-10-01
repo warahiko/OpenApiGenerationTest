@@ -13,6 +13,7 @@ package com.example.openapigenerationtestapi.sp.model
 
 
 import com.squareup.moshi.Json
+
 /**
  * Qiita Teamのグループを表します。
  * @param createdAt データが作成された日時

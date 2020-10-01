@@ -7,35 +7,35 @@ servers:
   - url: https://qiita.com/api/v2/
     description: Qiita API
 tags:
-- name: user
-  description: ユーザに関係する操作
-- name: item
-  description: 投稿に関係する操作
+  - name: user
+    description: ユーザに関係する操作
+  - name: item
+    description: 投稿に関係する操作
 paths:
-  /api/v2/users:
+  /users:
     get:
       tags:
-      - user
+        - user
       summary: 全てのユーザの一覧を作成日時の降順で取得します。
       description: getAllUser の詳細です。
       operationId: getAllUser
       parameters:
-      - name: page
-        in: query
-        description: ページ番号 (1から100まで)
-        example: 1
-        required: false
-        schema:
-          type: string
-          pattern: /^[0-9]+$/
-      - name: per_page
-        in: query
-        description: 1ページあたりに含まれる要素数 (1から100まで)
-        example: 20
-        required: false
-        schema:
-          type: string
-          pattern: /^[0-9]+$/
+        - name: page
+          in: query
+          description: ページ番号 (1から100まで)
+          example: 1
+          required: false
+          schema:
+            type: string
+            pattern: /^[0-9]+$/
+        - name: per_page
+          in: query
+          description: 1ページあたりに含まれる要素数 (1から100まで)
+          example: 20
+          required: false
+          schema:
+            type: string
+            pattern: /^[0-9]+$/
       responses:
         200:
           description: 取得成功です。
@@ -47,20 +47,20 @@ paths:
                   $ref: '#/components/schemas/User'
         default:
           description: Unexpected error
-  /api/v2/users/{user_id}:
+  /users/{user_id}:
     get:
       tags:
-      - user
-      summary: ユーザを取得します。 
+        - user
+      summary: ユーザを取得します。
       description: getUser の詳細です。
       operationId: getUser
       parameters:
-      - name: user_id
-        in: path
-        description: ユーザID
-        required: true
-        schema:
-          type: string
+        - name: user_id
+          in: path
+          description: ユーザID
+          required: true
+          schema:
+            type: string
       responses:
         200:
           description: 取得成功です。
@@ -68,35 +68,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-  /api/v2/items:
+  /items:
     get:
       tags:
-      - item
+        - item
       summary: 記事の一覧を作成日時の降順で返します。
       description: getAllItems の詳細です。
       operationId: getAllItems
       parameters:
-      - name: page
-        in: query
-        description: ページ番号 (1から100まで)
-        example: 1
-        required: false
-        schema:
-          type: string
-      - name: per_page
-        in: query
-        description: 1ページあたりに含まれる要素数 (1から100まで)
-        example: 20
-        required: false
-        schema:
-          type: string
-      - name: query
-        in: query
-        description: 検索クエリ
-        example: qiita user:Qiita
-        required: false
-        schema:
-          type: string
+        - name: page
+          in: query
+          description: ページ番号 (1から100まで)
+          example: 1
+          required: false
+          schema:
+            type: string
+        - name: per_page
+          in: query
+          description: 1ページあたりに含まれる要素数 (1から100まで)
+          example: 20
+          required: false
+          schema:
+            type: string
+        - name: query
+          in: query
+          description: 検索クエリ
+          example: qiita user:Qiita
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: 取得成功です。
@@ -106,6 +106,57 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Item'
+    post:
+      tags:
+        - item
+      summary: 新たに記事を作成します。
+      description: postItem の詳細です。
+      operationId: postItem
+      requestBody:
+        description: postItem のrequest 詳細です。
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  description: Markdown形式の本文
+                  type: string
+                  example: "# Example"
+                coediting:
+                  description: この記事が共同更新状態かどうか (Qiita Teamでのみ有効)
+                  type: boolean
+                  example: false
+                group_url_name:
+                  description: この投稿を公開するグループの url_name (null で全体に公開。Qiita Teamでのみ有効)
+                  type: string
+                  nullable: true
+                  example: dev
+                private:
+                  description: 限定共有状態かどうかを表すフラグ (Qiita Teamでは無効)
+                  type: boolean
+                  example: false
+                tags:
+                  description: 記事に付いたタグ一覧
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Tagging'
+                title:
+                  description: 記事のタイトル
+                  type: string
+                  example: Example title
+                tweet:
+                  description: Twitterに投稿するかどうか (Twitter連携を有効化している場合のみ有効)
+                  type: boolean
+                  example: false
+        required: true
+      responses:
+        201:
+          description: 作成成功です。
+        default:
+          description: Unexpected error
+      security:
+      - Bearer: []
 components:
   schemas:
     User:
@@ -196,7 +247,7 @@ components:
         body:
           description: Markdown形式の本文
           type: string
-          example: "# Example"
+          example: '# Example'
         coediting:
           description: この記事が共同更新状態かどうか (Qiita Teamでのみ有効)
           type: boolean
@@ -234,7 +285,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Tag'
-          example: '[{"name"=>"Ruby", "versions"=>["0.0.1"]}]'
         title:
           description: 記事のタイトル
           type: string
@@ -276,6 +326,19 @@ components:
           description: このタグが付けられた記事の数
           type: integer
           example: 200
+    Tagging:
+      description: 記事とタグとの関連を表します。
+      type: object
+      properties:
+        name:
+          description: タグを特定するための一意な名前
+          type: string
+          example: qiita
+        versions:
+          type: array
+          items:
+            type: string
+            example: 0.0.1
     Group:
       description: Qiita Teamのグループを表します。
       type: object
@@ -306,3 +369,8 @@ components:
           description: グループのチーム上での一意な名前を表します。
           type: string
           example: dev
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      description: Access token for API

@@ -17,10 +17,10 @@ interface UserApi {
      * 
      * @param page ページ番号 (1から100まで) (optional)
      * @param perPage 1ページあたりに含まれる要素数 (1から100まで) (optional)
-     * @return [Call]<[kotlin.Array<User>]>
+     * @return [Call]<[kotlin.collections.List<User>]>
      */
-    @GET("/api/v2/users")
-    fun getAllUser(@Query("page") page: kotlin.String? = null, @Query("per_page") perPage: kotlin.String? = null): Call<kotlin.Array<User>>
+    @GET("api/v2/users")
+    fun getAllUser(@Query("page") page: kotlin.String? = null, @Query("per_page") perPage: kotlin.String? = null): Call<kotlin.collections.List<User>>
 
     /**
      * ユーザを取得します。
@@ -31,7 +31,7 @@ interface UserApi {
      * @param userId ユーザID 
      * @return [Call]<[User]>
      */
-    @GET("/api/v2/users/{user_id}")
+    @GET("api/v2/users/{user_id}")
     fun getUser(@Path("user_id") userId: kotlin.String): Call<User>
 
 }

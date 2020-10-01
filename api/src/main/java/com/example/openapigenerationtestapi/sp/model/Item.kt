@@ -69,7 +69,7 @@ data class Item (
     val reactionsCount: kotlin.Int? = null,
     /* 記事に付いたタグ一覧 */
     @Json(name = "tags")
-    val tags: kotlin.Array<Tag>? = null,
+    val tags: kotlin.collections.List<Tag>? = null,
     /* 記事のタイトル */
     @Json(name = "title")
     val title: kotlin.String? = null,

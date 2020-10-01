@@ -17,9 +17,9 @@ interface ItemApi {
      * @param page ページ番号 (1から100まで) (optional)
      * @param perPage 1ページあたりに含まれる要素数 (1から100まで) (optional)
      * @param query 検索クエリ (optional)
-     * @return [Call]<[kotlin.Array<Item>]>
+     * @return [Call]<[kotlin.collections.List<Item>]>
      */
-    @GET("/api/v2/items")
-    fun getAllItems(@Query("page") page: kotlin.String? = null, @Query("per_page") perPage: kotlin.String? = null, @Query("query") query: kotlin.String? = null): Call<kotlin.Array<Item>>
+    @GET("api/v2/items")
+    fun getAllItems(@Query("page") page: kotlin.String? = null, @Query("per_page") perPage: kotlin.String? = null, @Query("query") query: kotlin.String? = null): Call<kotlin.collections.List<Item>>
 
 }

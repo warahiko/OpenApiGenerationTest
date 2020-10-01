@@ -5,6 +5,7 @@ import retrofit2.http.*
 import retrofit2.Call
 import okhttp3.RequestBody
 
+import com.example.openapigenerationtestapi.sp.model.InlineObject
 import com.example.openapigenerationtestapi.sp.model.Item
 
 interface ItemApi {
@@ -19,7 +20,20 @@ interface ItemApi {
      * @param query 検索クエリ (optional)
      * @return [Call]<[kotlin.collections.List<Item>]>
      */
-    @GET("api/v2/items")
+    @GET("items")
     fun getAllItems(@Query("page") page: kotlin.String? = null, @Query("per_page") perPage: kotlin.String? = null, @Query("query") query: kotlin.String? = null): Call<kotlin.collections.List<Item>>
+
+    /**
+     * 新たに記事を作成します。
+     * postItem の詳細です。
+     * Responses:
+     *  - 201: 作成成功です。
+     *  - 0: Unexpected error
+     * 
+     * @param inlineObject  
+     * @return [Call]<[Unit]>
+     */
+    @POST("items")
+    fun postItem(@Body inlineObject: InlineObject): Call<Unit>
 
 }

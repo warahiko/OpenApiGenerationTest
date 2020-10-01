@@ -1,5 +1,6 @@
 package com.example.openapigenerationtestapi.infrastructure
 
+import com.example.openapigenerationtestapi.auth.HttpBearerAuth
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -43,6 +44,38 @@ class ApiClient(
 
     init {
         normalizeBaseUrl()
+    }
+
+    constructor(
+        baseUrl: String = defaultBasePath,
+        okHttpClientBuilder: OkHttpClient.Builder? = null,
+        serializerBuilder: Moshi.Builder = Serializer.moshiBuilder,
+        authNames: Array<String>
+    ) : this(baseUrl, okHttpClientBuilder, serializerBuilder) {
+        authNames.forEach { authName ->
+            val auth = when (authName) {
+                "Bearer" -> HttpBearerAuth("bearer")
+                else -> throw RuntimeException("auth name $authName not found in available auth names")
+            }
+            addAuthorization(authName, auth);
+        }
+    }
+
+    constructor(
+        baseUrl: String = defaultBasePath,
+        okHttpClientBuilder: OkHttpClient.Builder? = null,
+        serializerBuilder: Moshi.Builder = Serializer.moshiBuilder,
+        authName: String, 
+        bearerToken: String
+    ) : this(baseUrl, okHttpClientBuilder, serializerBuilder, arrayOf(authName)) {
+        setBearerToken(bearerToken)
+    }
+
+    fun setBearerToken(bearerToken: String): ApiClient {
+        apiAuthorizations.values.runOnFirst<Interceptor, HttpBearerAuth> {
+            this.bearerToken = bearerToken
+        }
+        return this
     }
 
     /**

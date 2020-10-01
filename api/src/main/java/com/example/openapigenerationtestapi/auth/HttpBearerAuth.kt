@@ -1,11 +1,10 @@
-package {{packageName}}.auth
+package com.example.openapigenerationtestapi.auth
 
 import java.io.IOException
 
 import okhttp3.Interceptor
 import okhttp3.Interceptor.Chain
 import okhttp3.Response
-import kotlin.jvm.Throws
 
 class HttpBearerAuth(
     private var schema: String = "",

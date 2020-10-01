@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm")
 
     // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-gradle-plugin/README.adoc
-    id("org.openapi.generator") version "4.3.1"
+    id("org.openapi.generator") version "5.0.0-beta2"
     id("kotlinx-serialization")
 }
 

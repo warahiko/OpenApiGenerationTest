@@ -3,7 +3,6 @@ package com.example.openapigenerationtestapi.infrastructure
 import com.squareup.moshi.JsonDataException
 import com.squareup.moshi.Moshi
 import retrofit2.Response
-import kotlin.jvm.Throws
 
 @Throws(JsonDataException::class)
 inline fun <reified T> Response<*>.getErrorResponse(serializerBuilder: Moshi.Builder = Serializer.moshiBuilder): T? {

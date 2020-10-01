@@ -46,4 +46,18 @@ class MainViewModel : ViewModel() {
             }
         })
     }
+
+    fun postItem() {
+        QiitaItemService().postItem(callback = object : Callback<Unit> {
+            override fun onFailure(call: Call<Unit>, t: Throwable) {
+                t.printStackTrace()
+            }
+
+            override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
+                if (!response.isSuccessful) return
+
+                println("POST!!")
+            }
+        })
+    }
 }

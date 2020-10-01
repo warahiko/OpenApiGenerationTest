@@ -11,7 +11,7 @@ import retrofit2.Callback
 
 class QiitaUserService {
 
-    private val userApi: UserApi = ApiClient()
+    private val userApi: UserApi = ApiClient(authName = "Bearer", bearerToken = "05c2a2329bc54f8be64fc43a5640a4e785725d5c")
         .setLogger {
             println(it)
         }

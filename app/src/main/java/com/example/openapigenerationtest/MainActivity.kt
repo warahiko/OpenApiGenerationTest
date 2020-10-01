@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.itemButton
 import kotlinx.android.synthetic.main.activity_main.itemText
+import kotlinx.android.synthetic.main.activity_main.postButton
 import kotlinx.android.synthetic.main.activity_main.userButton
 import kotlinx.android.synthetic.main.activity_main.userText
 
@@ -29,6 +30,9 @@ class MainActivity : AppCompatActivity() {
         }
         itemButton.setOnClickListener {
             viewModel.getAllItems()
+        }
+        postButton.setOnClickListener {
+            viewModel.postItem()
         }
     }
 }

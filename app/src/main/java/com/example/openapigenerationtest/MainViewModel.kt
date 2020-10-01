@@ -11,21 +11,21 @@ import retrofit2.Response
 
 class MainViewModel : ViewModel() {
 
-    private val _users = MutableLiveData<Array<User>>()
-    val users: LiveData<Array<User>>
+    private val _users = MutableLiveData<List<User>>()
+    val users: LiveData<List<User>>
         get() = _users
 
-    private val _items = MutableLiveData<Array<Item>>()
-    val items: LiveData<Array<Item>>
+    private val _items = MutableLiveData<List<Item>>()
+    val items: LiveData<List<Item>>
         get() = _items
 
     fun getAllUsers() {
-        QiitaUserService().getAllUser(callback = object : Callback<Array<User>> {
-            override fun onFailure(call: Call<Array<User>>, t: Throwable) {
+        QiitaUserService().getAllUser(callback = object : Callback<List<User>> {
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 t.printStackTrace()
             }
 
-            override fun onResponse(call: Call<Array<User>>, response: Response<Array<User>>) {
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if (!response.isSuccessful) return
 
                 _users.postValue(response.body())
@@ -34,12 +34,12 @@ class MainViewModel : ViewModel() {
     }
 
     fun getAllItems() {
-        QiitaItemService().getAllItems(callback = object : Callback<Array<Item>> {
-            override fun onFailure(call: Call<Array<Item>>, t: Throwable) {
+        QiitaItemService().getAllItems(callback = object : Callback<List<Item>> {
+            override fun onFailure(call: Call<List<Item>>, t: Throwable) {
                 t.printStackTrace()
             }
 
-            override fun onResponse(call: Call<Array<Item>>, response: Response<Array<Item>>) {
+            override fun onResponse(call: Call<List<Item>>, response: Response<List<Item>>) {
                 if (!response.isSuccessful) return
 
                 _items.postValue(response.body())

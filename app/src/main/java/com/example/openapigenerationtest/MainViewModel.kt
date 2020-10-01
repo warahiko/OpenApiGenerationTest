@@ -20,7 +20,7 @@ class MainViewModel : ViewModel() {
         get() = _items
 
     fun getAllUsers() {
-        QiitaUserService().getAllUser(1, 20, object : Callback<Array<User>> {
+        QiitaUserService().getAllUser(callback = object : Callback<Array<User>> {
             override fun onFailure(call: Call<Array<User>>, t: Throwable) {
                 t.printStackTrace()
             }
@@ -34,7 +34,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun getAllItems() {
-        QiitaItemService().getAllItems(1, 20, "", object : Callback<Array<Item>> {
+        QiitaItemService().getAllItems(callback = object : Callback<Array<Item>> {
             override fun onFailure(call: Call<Array<Item>>, t: Throwable) {
                 t.printStackTrace()
             }

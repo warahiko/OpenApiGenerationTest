@@ -13,7 +13,7 @@ class QiitaItemService {
     private val itemApi: ItemApi
 
     init {
-        val loggingInterceptor =  HttpLoggingInterceptor().apply {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
             setLevel(HttpLoggingInterceptor.Level.BODY)
         }
         val httpClient: OkHttpClient = OkHttpClient.Builder().apply {
@@ -32,8 +32,8 @@ class QiitaItemService {
         itemApi = ApiClient(okHttpClient = httpClient).createService(ItemApi::class.java)
     }
 
-    fun getAllItems(page: Int, perPage: Int, query: String, callback: Callback<Array<Item>>) {
-        val call = itemApi.getAllItems(page.toString(), perPage.toString(), query)
+    fun getAllItems(callback: Callback<Array<Item>>, page: Int? = null, perPage: Int? = null, query: String? = null) {
+        val call = itemApi.getAllItems(page?.toString(), perPage?.toString(), query)
         call.enqueue(callback)
     }
 }

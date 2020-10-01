@@ -13,7 +13,7 @@ class QiitaUserService {
     private val userApi: UserApi
 
     init {
-        val loggingInterceptor =  HttpLoggingInterceptor().apply {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
             setLevel(HttpLoggingInterceptor.Level.BODY)
         }
         val httpClient: OkHttpClient = OkHttpClient.Builder().apply {
@@ -32,8 +32,8 @@ class QiitaUserService {
         userApi = ApiClient(okHttpClient = httpClient).createService(UserApi::class.java)
     }
 
-    fun getAllUser(page: Int, perPage: Int, callback: Callback<Array<User>>) {
-        val call = userApi.getAllUser(page.toString(), perPage.toString())
+    fun getAllUser(callback: Callback<Array<User>>, page: Int? = null, perPage: Int? = null) {
+        val call = userApi.getAllUser(page?.toString(), perPage?.toString())
         call.enqueue(callback)
     }
 

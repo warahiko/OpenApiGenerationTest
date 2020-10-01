@@ -34,24 +34,19 @@ android {
     }
 }
 
-val kotlinVersion: String by rootProject.extra
-val retrofitVersion: String by rootProject.extra
-val okHttpVersion: String by rootProject.extra
-
 dependencies {
     implementation(fileTree("dir" to "libs", "include" to listOf("*.jar")))
     implementation(project(":api"))
 
-    implementation(kotlin("stdlib", version = kotlinVersion))
-    implementation("androidx.core", "core-ktx", "1.3.1")
-    implementation("androidx.appcompat", "appcompat", "1.2.0")
-    implementation("androidx.constraintlayout", "constraintlayout", "2.0.1")
-    implementation("androidx.activity", "activity-ktx", "1.1.0")
-    testImplementation("junit", "junit", "4.12")
-    androidTestImplementation("androidx.test.ext", "junit", "1.1.2")
-    androidTestImplementation("androidx.test.espresso", "espresso-core", "3.3.0")
+    implementation(Dependency.kotlinStdLib)
+    implementation(Dependency.androidxCoreKtx)
+    implementation(Dependency.androidxAppcompat)
+    implementation(Dependency.androidxConstraintLayout)
+    implementation(Dependency.androidxActivityKtx)
+    implementation(Dependency.junit)
+    implementation(Dependency.androidxTestExtJunit)
+    implementation(Dependency.androidxTestEspressoCore)
 
-    // retrofit
-    implementation("com.squareup.retrofit2","retrofit", retrofitVersion)
-    implementation("com.squareup.okhttp3", "logging-interceptor", okHttpVersion)
+    implementation(Dependency.retrofit)
+    implementation(Dependency.okHttpLoggingInterceptor)
 }
